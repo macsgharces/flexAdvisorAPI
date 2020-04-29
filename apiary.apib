@@ -1,0 +1,353 @@
+FORMAT: 1A
+HOST: https://polls.apiblueprint.org/
+
+# FlexAdvisor
+
+The FlexAdvisor API is organized around REST. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.
+
+You can use the FlexAdvisor API in test mode, which does not affect your live data or interact with the banking networks. The API key you use to authenticate the request determines whether the request is live mode or test mode.
+
+The FlexAdvisor API differs for every account as we release new versions and tailor functionality. Log in to see docs customized to your version of the API, with your test key and data.
+
+## Registered Institutions Collection [/registeredInstitutions]
+
+### List All Registered Institutions [GET]
++ Response 200 (application/json)
+
+        [
+            {
+                {
+        "institutionName": "Test Institution",
+        "academicID": "MDC0000000010",
+        "users": [ 
+        {
+        "username": "MDC_SystemAdmin",
+        "fullname": "Test Admin",
+        "password": "MDCtempPassword",
+        "institutionID":"MDC0000000010",
+        "role": "systemAdmin",
+        },{
+        "username": "MDC_firstDirector",
+        "fullname": "Test Director",
+        "password": "MDCtempDirectorPassword",
+        "institutionID":"MDC0000000010",
+        "role": "programDirector",
+        "program": "ComputerScience",
+        },
+        ],
+        }
+        ]
+        }
+        ]
+        
+### Register A New Institution [POST]
++ Request (application/json)
+
+        {
+        "institutionName": "Test Institution",
+        "academicID": "MDC0000000010",
+        "users": [ 
+        {
+        "username": "MDC_SystemAdmin",
+        "fullname": "Test Admin",
+        "password": "MDCtempPassword",
+        "institutionID":"MDC0000000010",
+        "role": "systemAdmin",
+        },
+        ],
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /registeredInstitution/
+
+    + Body
+
+            {
+                "insitutionName": "Test Institution",
+                "academicID": "MDC0000000010",
+                "users": [
+                    {
+                        "username": "MDC_SystemAdmin",
+                        "fullname": "Test Admin",
+                        "password": "MDCtempPassword",
+                        "institutionID":"MDC0000000010",
+                        "role": "systemAdmin",
+                    }
+                ]
+            }
+
+
+## Users Collection [/users]
+
+### List All Users [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+        "username": "MDC_SystemAdmin",
+        "fullname": "Test Admin",
+        "password": "MDCtempPassword",
+        "institutionID":"MDC0000000010",
+        "role": "systemAdmin",
+        },{
+        "username": "MDC_firstDirector",
+        "fullname": "Test Director",
+        "password": "MDCtempDirectorPassword",
+        "institutionID":"MDC0000000010",
+        "role": "programDirector",
+        "program": "ComputerScience",
+        },
+        {
+        "username": "MDC_firstAdvisor",
+        "fullname": "Test Advisor",
+        "password": "MDCtempAdvisorPassword",
+        "institutionID":"MDC0000000010",
+        "role": "programAdvisor",
+        "assignedDirector":"MDC_firstDirector",
+        "assignedStudents":[
+            {"username": "testStudent","messageThread":"true"},
+            {"username": "testStudent2","messageThread":"true"},
+            {"username": "testStudent3","messageThread":"false"}
+        ],
+        },
+        {
+        "username": "testStudent",
+        "fullname": "Test Student1",
+        "password": "userCreatedPassword",
+        "institutionID":"MDC0000000010",
+        "role": "student",
+        "program": "ComputerScience",
+        "assignedDirector":"MDC_firstDirector",
+        "assignedAdvisor":"MDC_firstAdvisor",
+        "classPerSemester":"4",
+        "IEP":[
+            {"semester1": [
+                    "classes":"class1",
+                    "classes":"class2",
+                    "classes":"class3",
+            ]
+            },
+            {"semester2": [
+                    "classes":"class4",
+                    "classes":"class5",
+                    "classes":"class6",
+            ]
+            },
+            {"semester3": [
+                    "classes":"class7",
+                    "classes":"class8",
+                    "classes":"class9",
+            ]
+            },
+            {"semester4": [
+                    "classes":"class10",
+                    "classes":"class11",
+                    "classes":"class12",
+            ]
+            },
+        ],
+        "IEP_status":false,
+        "messageThread":[
+        "message1":"false",
+        ]
+        },
+                ]
+            }
+        ]
+
+### Create a New User [POST]
+
+This is used to post a user to the data collection.
+Preprocessing is suggested, using the GET request to filter if a username already exist.
+
++ Request (application/json)
+
+        {
+        "username": "testStudent",
+        "fullname": "Test Student2",
+        "password": "userCreatedPassword",
+        "institutionID":"MDC0000000010",
+        "role": "student",
+        "program": "ComputerScience",
+        "assignedDirector":"MDC_firstDirector",
+        "assignedAdvisor":"MDC_firstAdvisor",
+        "classPerSemester":"2",
+        "IEP":[
+            {"semester1": [
+                    "classes":"class1",
+                    "classes":"class2",
+            ]
+            },
+            {"semester2": [
+                    "classes":"class3",
+                    "classes":"class4",
+            ]
+            },
+            {"semester3": [
+                    "classes":"class5",
+                    "classes":"class6",
+            ]
+            },
+            {"semester4": [
+                    "classes":"class7",
+                    "classes":"class8",
+            ]
+            },
+        ],
+        "IEP_status":false,
+        "messageThread":[
+        "message1":"false",
+        ]
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /newUser/
+
+    + Body
+        
+            {
+                "username": "testStudent",
+                "fullname": "Test Student2",
+                "password": "userCreatedPassword",
+                "institutionID":"MDC0000000010",
+                "role": "student",
+                "program": "ComputerScience",
+                "assignedDirector":"MDC_firstDirector",
+                "assignedAdvisor":"MDC_firstAdvisor",
+                "classPerSemester":"2",
+            }
+
+## Institution Details Collection [/institutionDetails]
+### List the Institution Details [GET]
++ Attributes
+    + param1: academicID
+    
++ Response 200 (application/json)
+
+        [
+        {
+        "academicID": "MDC0000000010",
+        "address":"MDC-physical_Adress"
+        "systemAdmin": [ 
+        {"username": "MDC_SystemAdmin"},
+        ]
+        }
+        ]
+        
+### Update the Intitution Details [POST]
+This collection is primarily used to popualte the view/edit details page for a system administrator.
++ Attributes
+    + param1: academicID
+    
++ Request (application/json)
+
+        [
+        {
+        "academicID": "MDC0000000010",
+        "address":"MDC-physical_Adress"
+        "systemAdmin": [ 
+        {"username": "MDC_SystemAdmin"},
+        ]
+        }
+        ]
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /institutionDetailsAdded/
+
+    + Body
+
+            [
+            {
+            "academicID": "MDC0000000010",
+            "address":"MDC-physical_Adress"
+            "systemAdmin": [ 
+            {"username": "MDC_SystemAdmin"},
+            ]
+            }
+            ]
+
+## Programs Collection [/programDetails]
+### List the Program Details [GET]
++ Attributes
+    + param1: programDirector
+    + param1: academicID
+    
++ Response 200 (application/json)
+
+        [
+        {
+        "programDirector": "MDC_firstDirector",
+        "program":"ComputerScience",
+        "academicID": "MDC0000000010",
+        "classList": [ 
+            {"class1": "CourseRecommendation1"},
+            {"class2": "CourseRecommendation2"},
+            {"class3": "CourseRecommendation3"},
+            {"class4": "CourseRecommendation4"},
+            {"class5": "CourseRecommendation5"},
+            {"class6": "CourseRecommendation6"},
+            {"class7": "CourseRecommendation7"},
+            {"class8": "CourseRecommendation8"},
+            {"class9": "CourseRecommendation9"},
+            {"class10": "CourseRecommendation10"},
+            {"class11": "CourseRecommendation11"},
+            {"class12": "CourseRecommendation12"}
+        ]
+        }
+        ]
+        
+### Update the Program Details [POST]
+This collection is primarily used to popualte the view/edit progam details page(intended for a program director).
++ Attributes
+    + param1: programDirector
+    + param1: academicID
+    
++ Request (application/json)
+
+        [
+        {
+        "programDirector": "MDC_firstDirector",
+        "program":"ComputerScience",
+        "academicID": "MDC0000000010",
+        "classList": [ 
+            {"class1": "CourseRecommendation1"},
+            {"class2": "CourseRecommendation2"},
+            {"class3": "CourseRecommendation3"},
+            {"class4": "CourseRecommendation4"},
+            {"class5": "CourseRecommendation5"},
+            {"class6": "CourseRecommendation6"},
+            {"class7": "CourseRecommendation7"},
+            {"class8": "CourseRecommendation8"},
+            {"class9": "CourseRecommendation9"},
+            {"class10": "CourseRecommendation10"},
+            {"class11": "CourseRecommendation11"},
+            {"class12": "CourseRecommendation12"}
+        ]
+        }
+        ]
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /programDetailsUpdated/
+
+    + Body
+
+            [
+            {
+            "programDirector": "MDC_firstDirector",
+            "program":"ComputerScience",
+            ]
+            }
+            ]
