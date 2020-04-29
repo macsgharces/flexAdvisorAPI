@@ -2,6 +2,7 @@
 Backend schemas and routes to implements the FlexAdvisor API for your solution.
 
 To check the backend, how the folder in VS Code, open a terminal to terminal - install the following dependencies:
+
 install npm -g
 install express -g
 install mongoose -g
@@ -16,4 +17,5 @@ set it = to your mongodb atlas conection string.
 Install Insonmia for headless API testing
 https://insomnia.rest/
 
-Check our API documentation on how to access/retrieve data :)
+Check our API documentation (apiary.apib) on how to access/retrieve data using our API's 
+:)
