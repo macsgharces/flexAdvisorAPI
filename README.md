@@ -28,7 +28,7 @@ https://insomnia.rest/
 
 ## Deployment
 
-GitHub should automatically version any commit chnages.
+GitHub should automatically version any commit changes.
 
 ## Built With
 
@@ -37,7 +37,10 @@ GitHub should automatically version any commit chnages.
 * [Express](https://expressjs.com/) - Node.js web framework
 * [Node.js](https://nodejs.org/en/) - js runtime script engine
 
+### Reference
+(apiary.apib)
+design modules for mock implementation included.
 
-Check our API documentation (apiary.apib) on how to access/retrieve data using our API's 
+Check reference API documentation (apiary.apib) on how to access/retrieve data using our API's 
 
 :)
